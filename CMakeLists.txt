@@ -11,17 +11,6 @@ endif()
 
 add_executable(bruteforce
   "main.cpp"
-  "Constants.hpp"
-  "Surface.cpp"
-  "Surface.hpp"
-  "SurfaceUtils.cpp"
-  "SurfaceUtils.hpp"
-  "Trig.cpp"
-  "Trig.hpp"
-  "vmath.cpp"
-  "vmath.hpp"
-  "WallsFloors.cpp"
-  "WallsFloors.hpp"
 )
 # For Tyler
 target_compile_features(bruteforce PRIVATE cxx_std_20)
