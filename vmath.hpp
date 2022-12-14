@@ -30,7 +30,7 @@ namespace sm64 {
   struct vec_t {
     static_assert((std::is_arithmetic_v<T> && !std::is_same_v<T, bool>), "T must be an integer or floating-point type");
     static_assert((!std::is_const_v<T> && !std::is_volatile_v<T>), "T cannot be const or volatile");
-    
+    static_assert(N >= 1, "Vector should contain at least 1 dimension");
   public:
     T& operator[](size_t i) {
       return _m_data[i];
@@ -39,6 +39,14 @@ namespace sm64 {
     const T& operator[](size_t i) const {
       return _m_data[i];
     }
+    
+    T& x() { return _m_data[0]; }
+    T& y() { return _m_data[1]; }
+    T& z() { return _m_data[2]; }
+    
+    const T& x() const { return _m_data[0]; }
+    const T& y() const { return _m_data[1]; }
+    const T& z() const { return _m_data[2]; }
   
     friend vec_t operator+(const vec_t& a, const vec_t& b) {
       return SM64_VMATH_FOLD_RETURN(N, vec_t {a[Is] + b[Is]...});
