@@ -1,10 +1,11 @@
-#include "vecutil.hpp"
+#include "utils.hpp"
 #include "trig.hpp"
 #include "vmath.hpp"
 
 namespace sm64 {
   vec3f get_surface_normal(const tri_verts& v) {
-    return vec_cross(v[1] - v[0], v[2] - v[1]);
+    vec3f p = (vec3f) v[0], q = (vec3f) v[1], r = (vec3f) v[2];
+    return vec_normalize(vec_cross(q - p, r - q));
   }
   
   // equivalent to mtxf_align_terrain_normal
@@ -25,6 +26,14 @@ namespace sm64 {
       vec4f {up_dir[0],   up_dir[1],   up_dir[2],   0},
       vec4f {fwd_dir[0],  fwd_dir[1],  fwd_dir[2],  0},
       vec4f {pos[0],      pos[1],      pos[2],      1},
+    };
+  }
+  
+  vec3f tform_mult(const mat4 &tform, const vec3f &pos) {
+    return vec3f {
+      tform[0][0] * pos[0] + tform[1][0] * pos[1] + tform[2][0] * pos[2] + tform[3][0],
+      tform[0][1] * pos[0] + tform[1][1] * pos[1] + tform[2][1] * pos[2] + tform[3][1],
+      tform[0][2] * pos[0] + tform[1][2] * pos[1] + tform[2][2] * pos[2] + tform[3][2]
     };
   }
 }  // namespace sm64

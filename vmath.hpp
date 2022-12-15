@@ -84,7 +84,7 @@ namespace sm64 {
     }
     
     template <class U> requires (std::is_convertible_v<T, U>)
-    explicit operator vec_t<U, N>() {
+    explicit operator vec_t<U, N>() const {
       return SM64_VMATH_FOLD_RETURN(N, (vec_t<U, N> {static_cast<U>((*this)[Is])...}));
     }
     
