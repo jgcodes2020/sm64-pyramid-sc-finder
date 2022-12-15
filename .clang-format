@@ -59,9 +59,20 @@ NamespaceIndentation: All
 PointerAlignment: Left
 
 SpaceAfterCStyleCast: true
+SpaceAroundPointerQualifiers: Before
 SpaceBeforeCtorInitializerColon: true
 SpaceBeforeCpp11BracedList: true
-SpaceAroundPointerQualifiers: Before
+
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterControlStatements: true
+  AfterForeachMacros: false
+  AfterFunctionDefinitionName: false
+  AfterIfMacros: false
+  AfterOverloadedOperator: false
+  # AfterRequiresInClause: true
+  # AfterRequiresInExpression: false
+  BeforeNonEmptyParentheses: false
 
 Standard: Cpp11
 

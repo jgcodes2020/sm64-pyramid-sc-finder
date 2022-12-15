@@ -19,12 +19,20 @@ namespace sm64 {
       m_verts[1] = verts[1];
       m_verts[2] = verts[2];
       m_normal = get_surface_normal(m_verts);
+      
+      return *this;
     }
     
+    // get 1 of the 3 vertices.
     const vec3s& operator[](size_t i) const {
       return m_verts[i];
     }
     
+    const tri_verts& verts() const {
+      return m_verts;
+    }
+    
+    // get the normal.
     const vec3f& normal() const {
       return m_normal;
     }
@@ -74,6 +82,6 @@ namespace sm64 {
   };
   
   // Adds a tilting inverted pyramid to a collision object.
-  void add_inv_pyramid(collision& coll, vec3s& pos, vec3f& tilt);
+  void add_inv_pyramid(collision& coll, const vec3s& pos, const vec3f& tilt);
 }  // namespace sm64
 #endif

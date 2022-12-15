@@ -11,6 +11,16 @@ endif()
 
 add_executable(bruteforce
   "main.cpp"
+  "solver.cpp"
+  "surface.cpp"
+  "trig.cpp"
+  "utils.cpp"
+  "error.hpp"
+  "solver.hpp"
+  "surface.hpp"
+  "trig.hpp"
+  "utils.hpp"
+  "vmath.hpp"
 )
 # For Tyler
 target_compile_features(bruteforce PRIVATE cxx_std_20)

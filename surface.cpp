@@ -14,7 +14,7 @@ static tri_verts inv_pyramid_tris[] = {
 };
 
 namespace sm64 {
-  void add_inv_pyramid(collision& coll, vec3s& pos, vec3f& tilt) {
+  void add_inv_pyramid(collision& coll, const vec3s& pos, const vec3f& tilt) {
     mat4 tform = align_to_normal(tilt, (vec3f) pos, 0);
     
     for (const tri_verts& vts : inv_pyramid_tris) {
