@@ -1,5 +1,7 @@
 #include "error.hpp"
+#include "solver.hpp"
 #include "surface.hpp"
+#include "trig.hpp"
 #include "utils.hpp"
 #include "vmath.hpp"
 #include <cstdlib>
@@ -22,65 +24,9 @@ int main() {
     if (c.normal().y() > -0.5)
       continue;
     
-    // check if points line on SC y coordinate
-    bool p1_i = c[0].y() == sc_y;
-    bool p2_i = c[1].y() == sc_y;
-    bool p3_i = c[2].y() == sc_y;
+    auto [sce1, sce2] = pyra::intersect_tri_hplane(c.verts(), sc_y);
     
-    // number of intersecting points
-    int pcnt = int(p1_i) + int(p2_i) + int(p3_i);
-    // edges of squish-cancel haven
-    vec3f sce1, sce2;
-    
-    if (pcnt == 2) {
-      // one edge lies along the SC plane
-      if (p1_i) {
-        sce1 = (vec3f) c[0];
-        sce2 = p2_i? (vec3f) c[1] : p3_i? (vec3f) c[2] : throw pyra::abort_error();
-      }
-      else if (p2_i) {
-        sce1 = (vec3f) c[1];
-        sce2 = p3_i? (vec3f) c[2] : throw pyra::abort_error();
-      }
-    }
-    else if (pcnt == 1) {
-      // one point lies along the SC plane
-      // intersect the opposite edge
-      if (p1_i) {
-        sce1 = (vec3f) c[0];
-        sce2 = intersect_hplane((vec3f) c[1], (vec3f) c[2], sc_y);
-      }
-      else if (p2_i) {
-        sce1 = (vec3f) c[0];
-        sce2 = intersect_hplane((vec3f) c[1], (vec3f) c[2], sc_y);
-      }
-      else if (p3_i) {
-        sce1 = (vec3f) c[2];
-        sce2 = intersect_hplane((vec3f) c[0], (vec3f) c[1], sc_y);
-      }
-    }
-    else if (pcnt == 0) {
-      // find edges intersecting the (y = sc_y) plane
-      bool e1_i = (c[0].y() < sc_y) ^ (c[1].y() < sc_y);
-      bool e2_i = (c[1].y() < sc_y) ^ (c[2].y() < sc_y);
-      bool e3_i = (c[0].y() < sc_y) ^ (c[2].y() < sc_y);
-      
-      if (e1_i) {
-        sce1 = intersect_hplane((vec3f) c[0], (vec3f) c[1], sc_y);
-        if (e2_i)
-          sce2 = intersect_hplane((vec3f) c[1], (vec3f) c[2], sc_y);
-        else if (e3_i)
-          sce2 = intersect_hplane((vec3f) c[0], (vec3f) c[2], sc_y);
-      }
-      else if (e2_i && e3_i) {
-        sce1 = intersect_hplane((vec3f) c[1], (vec3f) c[2], sc_y);
-        sce2 = intersect_hplane((vec3f) c[0], (vec3f) c[2], sc_y);
-      }
-    }
-    else {
-      throw pyra::abort_error();
-    }
-    
-    
+    int16_t h_angle = atan2s(c.normal().z(), c.normal().x());
+    vec3f back_offset {-sins(h_angle), 0, -coss(h_angle)};
   }
 }

@@ -41,16 +41,5 @@ namespace sm64 {
         tform[3][2]};
   }
 
-  vec3f intersect_hplane(const vec3f& a, const vec3f& b, float y) {
-    if ((a.y() < y) == (b.y() < y)) {
-      throw std::invalid_argument("Points a and b are on same side of plane");
-    }
-    // Using a higher precision, for accuracy.
-    
-    double ratio = ((double) y - a.y()) / ((double) b.y() - a.y());
-    double ix = std::lerp((double) a.x(), (double) b.x(), ratio);
-    double iz = std::lerp((double) a.z(), (double) b.z(), ratio);
-    
-    return vec3f {(float) ix, y, (float) iz};
-  }
+  
 }  // namespace sm64

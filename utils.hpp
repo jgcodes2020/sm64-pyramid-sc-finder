@@ -10,7 +10,5 @@ namespace sm64 {
   
   vec3f tform_mult(const mat4& tform, const vec3f& pos);
   
-  // Intersects a line and a plane where the plane's equation is (y = n)
-  vec3f intersect_hplane(const vec3f& a, const vec3f& b, float n);
 }
 #endif

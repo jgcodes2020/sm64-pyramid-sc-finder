@@ -5,6 +5,19 @@
 using namespace sm64;
 
 namespace pyra {
+  vec3f intersect_hplane(const vec3f& a, const vec3f& b, float y) {
+    if ((a.y() < y) == (b.y() < y)) {
+      throw std::invalid_argument("Points a and b are on same side of plane");
+    }
+    // Using a higher precision, for accuracy.
+    
+    double ratio = ((double) y - a.y()) / ((double) b.y() - a.y());
+    double ix = std::lerp((double) a.x(), (double) b.x(), ratio);
+    double iz = std::lerp((double) a.z(), (double) b.z(), ratio);
+    
+    return vec3f {(float) ix, y, (float) iz};
+  }
+  
   std::array<vec3f, 2> intersect_tri_hplane(const tri_verts &c, float py) {
     // check if points line on SC y coordinate
     bool p1_i = c[0].y() == py;
